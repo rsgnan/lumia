@@ -12,4 +12,13 @@ $container->bind('pdo', function () {
     return require __DIR__ . '/inc/db-connection.php';
 });
 
-$container->get('pdo');
+
+$route = @(string) ($_GET['route'] ?? 'index');
+
+$container->bind('controller', function() {
+    return new \App\Admin\Controller\AdminController();
+});
+
+$controller = $container->get('controller');
+$controller->dispatch($route);
+
