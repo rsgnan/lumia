@@ -17,8 +17,8 @@ class AdminController
     {
         extract($params);
         ob_start();
-        require __DIR__ . '/../../../views/layouts/' . $view . '.view.php';
+        require __DIR__ . '/../../../views/' . $view . '.view.php';
         $contents = ob_get_clean();
-        require __DIR__ . '/../../../views/layouts/main.view.php';
+        require __DIR__ . '/../../../views/main.view.php';
     }
 }

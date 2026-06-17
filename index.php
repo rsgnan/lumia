@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Exibe erros para facilitar o desenvolvimento
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -13,12 +13,30 @@ $container->bind('pdo', function () {
 });
 
 
-$route = @(string) ($_GET['route'] ?? 'index');
-
-$container->bind('controller', function() {
-    return new \App\Admin\Controller\AdminController();
+// Brands
+$container->bind('brandsRepository', function () use ($container) {
+    $pdo = $container->get('pdo');
+    return new \App\Repository\BrandsRepository($pdo);
 });
 
-$controller = $container->get('controller');
-$controller->dispatch($route);
+$container->bind('brandsController', function () use ($container) {
+    $brandsRepository = $container->get('brandsRepository');
+    return new \App\Admin\Controller\BrandsController(
+        $brandsRepository
+    );
+});
 
+$route = @(string) ($_GET['route'] ?? 'index');
+
+if ($route === 'index') {
+    $container->bind('controller', function () {
+        return new \App\Admin\Controller\AdminController();
+    });
+    $container->get('controller')->dispatch($route);
+} else if ($route === 'brands/index') {
+    // Brands
+    $container->get('brandsController')->index();
+} else if ($route === 'brands/create') {
+    $brandsController = $container->get('brandsController');
+    $brandsController->create();
+}
