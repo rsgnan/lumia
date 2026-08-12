@@ -95,7 +95,7 @@
                     : (!empty($product->photo) ? 'uploads/products/' . e($product->photo) : '');
                 ?>
                 <label class="image-upload" for="product-image-input">
-                    <img id="image-preview" 
+                    <img class="image-preview" class="image-preview"
                         src="<?php echo e($previewSrc); ?>"
                         alt="Pré-visualização"
                         style="<?php echo e($hasPreview) ? '' : 'display:none;'; ?>">

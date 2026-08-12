@@ -137,6 +137,8 @@ class ProductController extends ViewController
             $description = trim((string) ($_POST['description'] ?? ''));
             // Mantém a foto atual do produto por padrão, caso nenhuma nova seja enviada 
             $photo = $product->photo ?? '';
+            // Guarda a foto original para poder apagá-la do disco depois de trocar 
+            $oldPhoto = $photo;
 
             // Validação dos dados e caso necessário retorna mensagem de erro
             if (empty($name)) {
@@ -164,7 +166,15 @@ class ProductController extends ViewController
                     if (!$upload['success']) {
                         $errors[] = $upload['error'];
                     } else {
-                        $photo = $upload['filename'];
+                        // Apaga a foto antiga do produto, se existir e for diferente da nova
+                        if (!empty($oldPhoto) && $oldPhoto !== $upload['filename']) {
+                            $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
+                            if (is_file($oldPhotoPath)) {
+                                if (!unlink($oldPhotoPath)) {
+                                    $errors[] = 'Não foi possível deletar a foto antiga.';
+                                }
+                            }
+                        }
                     }
                 } else {
                     // Há outros erros no formulário e guarda a foto em tmp para não perder no reload
@@ -184,10 +194,13 @@ class ProductController extends ViewController
                         $finalPath = __DIR__ . '/../../public/uploads/products/' . $tempPhotoName;
 
                         if (rename($tempPath, $finalPath)) {
-                            // Apaga foto antiga
-                            if (file_exists(__DIR__ . '/../../public/uploads/products' . $photo)) {
-                                if (!unlink($photo)) {
-                                    $error[] = 'Não foi possível deletar foto antiga.';
+                            // Apaga a foto antiga do produto, se existir e for diferente da nova
+                            if (!empty($oldPhoto) && $oldPhoto !== $tempPhotoName) {
+                                $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
+                                if (is_file($oldPhotoPath)) {
+                                    if (!unlink($oldPhotoPath)) {
+                                        $errors[] = 'Não foi possível deletar a foto antiga.';
+                                    }
                                 }
                             }
                             // Salva nome da nova foto

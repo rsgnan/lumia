@@ -86,7 +86,7 @@
             </div>
             <div class="card-body">
                 <label class="image-upload" for="product-image-input">
-                    <img id="image-preview" 
+                    <img id="image-preview" class="image-preview"
                         src="<?php echo !empty($tempPhoto) ? 'uploads/tmp/' . e($tempPhoto) : ''; ?>"
                         alt="Pré-visualização"
                         style="<?php echo !empty($tempPhoto) ? '' : 'display:none;'; ?>">
