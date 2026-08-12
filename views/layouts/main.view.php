@@ -19,7 +19,7 @@
         <nav class="nav">
             <div class="nav-section">
                 <div class="nav-label">Principal</div>
-                <a href="dashboard.php" class="nav-item active">
+                <a href="?route=dashboard/index" class="nav-item <?php if ($_GET['route'] == 'dashboard/index') echo e('active'); ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7" rx="1" />
                         <rect x="14" y="3" width="7" height="7" rx="1" />
@@ -28,7 +28,7 @@
                     </svg>
                     Dashboard
                 </a>
-                <a href="graphs.php" class="nav-item">
+                <a href="?route=graphs/index" class="nav-item <?php if ($_GET['route'] == 'graphs/index') echo e('active'); ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                     </svg>
@@ -37,7 +37,7 @@
             </div>
             <div class="nav-section">
                 <div class="nav-label">Catálogo</div>
-                <a href="products.php" class="nav-item">
+                <a href="?route=products/index" class="nav-item <?php if ($_GET['route'] == 'products/index') echo e('active'); ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 8v13H3V8" />
                         <path d="M1 3h22v5H1z" />
@@ -48,7 +48,7 @@
             </div>
             <div class="nav-section">
                 <div class="nav-label">Comercial</div>
-                <a href="sales.php" class="nav-item">
+                <a href="?route=sales/index" class="nav-item <?php if ($_GET['route'] == 'sales/index') echo e('active'); ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="12" y1="1" x2="12" y2="23" />
                         <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
@@ -59,7 +59,7 @@
             </div>
             <div class="nav-section">
                 <div class="nav-label">Administração</div>
-                <a href="sales.php" class="nav-item">
+                <a href="?route=users/index" class="nav-item <?php if ($_GET['route'] == 'users/index"') echo e('active'); ?>">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4">
