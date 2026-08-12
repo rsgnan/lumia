@@ -26,6 +26,15 @@ class ProductRepository
         $entries = $stmt->fetchAll(PDO::FETCH_CLASS, ProductModel::class);
         return $entries;
     }
+    public function getById(int $id): ?ProductModel
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM `products` WHERE id = :id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, ProductModel::class);
+        $entry = $stmt->fetch();
+        return $entry ?: null;
+    }
 
     public function getAllCategories(): array
     {
@@ -46,11 +55,28 @@ class ProductRepository
         $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $entries;
     }
-    public function create(string $name, int $category_id, string $tag, float $price, int $stock, string $description, string $photo) 
+    public function create(string $name, int $category_id, string $tag, float $price, int $stock, string $description, string $photo)
     {
         $stmt = $this->pdo->prepare('INSERT 
         INTO `products` (`name`, `category_id`, `tag`, `price`, `stock`, `description`, `photo`)
         VALUES(:name, :category_id, :tag, :price, :stock, :description, :photo)');
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':category_id', $category_id, PDO::PARAM_INT);
+        $stmt->bindValue(':tag', $tag);
+        $stmt->bindValue(':price', $price);
+        $stmt->bindValue(':stock', $stock, PDO::PARAM_INT);
+        $stmt->bindValue(':description', $description);
+        $stmt->bindValue(':photo', $photo);
+        $stmt->execute();
+    }
+    public function update(int $product_id, string $name, int $category_id, string $tag, float $price, int $stock, string $description, string $photo)
+    {
+        $stmt = $this->pdo->prepare('UPDATE `products`
+        SET `name` = :name, `category_id` = :category_id,
+        `tag` = :tag, `price` = :price, `stock` = :stock,
+        `description` = :description, `photo` = :photo
+        WHERE `id` = :id');
+        $stmt->bindValue(':id', $product_id, PDO::PARAM_INT);
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':category_id', $category_id, PDO::PARAM_INT);
         $stmt->bindValue(':tag', $tag);

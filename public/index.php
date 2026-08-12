@@ -23,6 +23,11 @@ $container->bind('productController', function() use($container) {
     return new \App\Controller\ProductController($productRepository);
 });
 
+// Errors
+$container->bind('errorController', function() use($container) {
+    return new \App\Controller\ErrorController();
+});
+
 // Tratamento de route
 
 $route = @(string) ($_GET['route'] ?? 'pages');
@@ -38,4 +43,11 @@ if($route == 'pages') {
 } else if ($route === 'products/create') {
     $adminController = $container->get('productController');
     $adminController->create();
+    } else if ($route === 'products/edit') {
+    $adminController = $container->get('productController');
+    $adminController->update();
+} else {
+    // Nenhuma rota bateu então devolve o error 404
+    $errorController = $container->get('errorController');
+    $errorController->notFound();
 }

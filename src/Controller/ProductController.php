@@ -120,4 +120,47 @@ class ProductController extends ViewController
             'tempPhoto' => $tempPhoto
         ]);
     }
+    public function update()
+    {
+
+        $categories = $this->productRepository->getAllCategories();
+        $errors = [];
+        $id  = @(int) ($_GET['id'] ?? 0);
+
+        if (!empty($_POST)) {
+            $name = trim((string) ($_POST['name'] ?? ''));
+            $category_id = (int) ($_POST['category_id'] ?? '');
+            $tag = trim((string) ($_POST['tag'] ?? ''));
+            $price = (float) ($_POST['price'] ?? '');
+            $stock = (int) ($_POST['stock'] ?? '');
+            $description = trim((string) ($_POST['description'] ?? ''));
+            $photo = trim((string) ($_POST['photo'] ?? ''));
+
+            // Validação dos dados e caso necessário retorna mensagem de erro
+            if (empty($name)) {
+                $errors[] = "Preencha o Nome do Produto corretamente!";
+            }
+
+            if (empty($category_id)) {
+                $errors[] = "Selecione uma Categoria!";
+            }
+
+            if ($price <= 0) {
+                $errors[] = "Estabeleça o valor do Produto!";
+            }
+
+            if (empty($errors)) {
+                // $this->productRepository->update($name, $category_id, $tag, $price, $stock, $description, $photo);
+                header("Location: index.php?route=products/index");
+                return;
+            }
+        }
+        $product = $this->productRepository->getById($id);
+
+        $this->render('products/edit', [
+            'product' => $product,
+            'categories' => $categories,
+            'errors' => $errors
+        ]);
+    }
 }

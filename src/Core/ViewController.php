@@ -6,7 +6,7 @@ abstract class ViewController
 {
 
     // Renderiza uma página dentro do layout principal
-    public function render(string $view, array $params): void
+    protected function render(string $view, array $params): void
     {
         extract($params);
         
@@ -16,4 +16,5 @@ abstract class ViewController
 
         require __DIR__ . '/../../views/layouts/main.view.php';
     }
+
 }

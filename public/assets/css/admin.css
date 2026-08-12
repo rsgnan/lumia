@@ -934,6 +934,84 @@ svg.donut {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* ERROR PAGE */
+.error-page {
+    display: 100%;
+    min-height: 100vh;
+    padding: 28px;
+}
+
+.error-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 56px 48px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.error-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+
+.error-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: rgba(239, 68, 68, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    color: var(--red);
+}
+
+.error-icon svg {
+    width: 30px;
+    height: 30px;
+}
+
+.error-code {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 8px;
+}
+
+.error-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.error-desc {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .stats-grid {
