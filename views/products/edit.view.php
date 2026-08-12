@@ -87,18 +87,25 @@
                 <div class="card-title">Imagem do Produto</div>
             </div>
             <div class="card-body">
+                <?php
+                // Prioriza a foto temporária, caso não haja, cai para a foto já salva do produto.
+                $hasPreview = !empty($tempPhoto) || !empty($product->photo);
+                $previewSrc = !empty($tempPhoto)
+                    ? 'uploads/tmp' . e($tempPhoto)
+                    : (!empty($product->photo) ? 'uploads/products/' . e($product->photo) : '');
+                ?>
                 <label class="image-upload" for="product-image-input">
                     <img id="image-preview" 
-                        src="<?php echo !empty($tempPhoto) ? 'uploads/tmp/' . e($tempPhoto) : ''; ?>"
+                        src="<?php echo e($previewSrc); ?>"
                         alt="Pré-visualização"
-                        style="<?php echo !empty($tempPhoto) ? '' : 'display:none;'; ?>">
-                    <svg id="image-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="<?php echo !empty($tempPhoto) ? 'display:none;' : ''; ?>">
+                        style="<?php echo e($hasPreview) ? '' : 'display:none;'; ?>">
+                    <svg id="image-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="<?php echo $hasPreview ? 'display:none;' : ''; ?>">
                         <path d="M4 16l4.6-4.6a2 2 0 012.8 0L16 16" />
                         <path d="M14 14l1.6-1.6a2 2 0 012.8 0L20 14" />
                         <rect x="3" y="4" width="18" height="16" rx="2" />
                         <circle cx="8.5" cy="8.5" r="1.5" />
                     </svg>
-                    <div class="image-upload-text" id="image-upload-text" style="<?php echo !empty($tempPhoto) ? 'display:none;' : ''; ?>">
+                    <div class="image-upload-text" id="image-upload-text" style="<?php echo $hasPreview ? 'display:none;' : ''; ?>">
                         <div class="image-upload-title">Clique para enviar uma imagem</div>
                         <div class="image-upload-hint">PNG ou JPG, até 5MB</div>
                     </div>
