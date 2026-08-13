@@ -19,6 +19,7 @@ class ProductRepository
         $entry = $stmt->fetch();
         return $entry !== false ? $entry : null;
     }
+    
     public function getAll(): array
     {
         $stmt = $this->pdo->prepare('SELECT * FROM `products` ORDER BY `name` ASC');
@@ -26,6 +27,7 @@ class ProductRepository
         $entries = $stmt->fetchAll(PDO::FETCH_CLASS, ProductModel::class);
         return $entries;
     }
+
     public function getById(int $id): ?ProductModel
     {
         $stmt = $this->pdo->prepare('SELECT * FROM `products` WHERE id = :id');
@@ -43,6 +45,7 @@ class ProductRepository
         $entries = $stmt->fetchAll(PDO::FETCH_CLASS, CategoryModel::class);
         return $entries;
     }
+
     public function categoryExists(int $category_id): bool
     {
         $stmt = $this->pdo->prepare('SELECT 1 FROM `categories` WHERE `id` = :id LIMIT 1');
@@ -50,6 +53,7 @@ class ProductRepository
         $stmt->execute();
         return $stmt->fetchColumn() !== false;
     }
+
     public function getWithCategoryName(): array
     {
         $stmt = $this->pdo->prepare('SELECT products.id, categories.name 
@@ -62,6 +66,7 @@ class ProductRepository
         $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $entries;
     }
+
     public function create(string $name, int $category_id, string $tag, float $price, int $stock, string $description, string $photo)
     {
         $stmt = $this->pdo->prepare('INSERT 
@@ -76,6 +81,14 @@ class ProductRepository
         $stmt->bindValue(':photo', $photo);
         $stmt->execute();
     }
+
+    public function delete(int $id): void
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM `products` WHERE `id` = :id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
     public function update(int $product_id, string $name, int $category_id, string $tag, float $price, int $stock, string $description, string $photo)
     {
         $stmt = $this->pdo->prepare('UPDATE `products`
