@@ -1,6 +1,7 @@
 <?php
 // Exibe erros para melhor trabalhar
 ini_set('display_errors', 1);
+session_start();
 
 // Carrega dependênciase funções
 require __DIR__ . '/../src/Support/Autoloader.php';

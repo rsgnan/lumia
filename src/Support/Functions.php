@@ -24,7 +24,13 @@ function validatePhoto(array $file): array
         case UPLOAD_ERR_FORM_SIZE;
             return['success' => false, 'error' => 'Arquivo excedo o tamanho permitido pelo servidor.'];
         default:
-        return['success' => false, 'error' => 'Erro desonhecido no upload.'];
+        return['success' => false, 'error' => 'Erro desconhecido no upload.'];
+    }
+
+    // Valida o nome do arquivo
+    $name = (string) ($file['name'] ?? '');
+    if ($name === '' || basename($name) !== $name || strpos($name, "\0") !== false) {
+        return ['success' => false, 'error' => 'Nome de arquivo inválido.'];
     }
 
     // Limite de 5MB

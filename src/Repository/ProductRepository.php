@@ -43,6 +43,13 @@ class ProductRepository
         $entries = $stmt->fetchAll(PDO::FETCH_CLASS, CategoryModel::class);
         return $entries;
     }
+    public function categoryExists(int $category_id): bool
+    {
+        $stmt = $this->pdo->prepare('SELECT 1 FROM `categories` WHERE `id` = :id LIMIT 1');
+        $stmt->bindValue(':id', $category_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn() !== false;
+    }
     public function getWithCategoryName(): array
     {
         $stmt = $this->pdo->prepare('SELECT products.id, categories.name 

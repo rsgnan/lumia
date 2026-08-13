@@ -73,11 +73,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Preço (R$)</label>
-                        <input class="form-input" type="number" name="price" value="<?php if (!empty($_POST['price'])) echo e($_POST['price']); ?>" placeholder="0,00">
+                        <input class="form-input" type="number" name="price" min="0" value="<?php if (!empty($_POST['price'])) echo e($_POST['price']); ?>" placeholder="0,00">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input class="form-input" type="number" name="stock" value="<?php if (!empty($_POST['stock'])) echo e($_POST['stock']); ?>" placeholder="0">
+                        <input class="form-input" type="number" name="stock" min="0" value="<?php if (!empty($_POST['stock'])) echo e($_POST['stock']); ?>" placeholder="0">
                     </div>
                 </div>
             </div>
