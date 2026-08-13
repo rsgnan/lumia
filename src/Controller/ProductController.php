@@ -9,6 +9,7 @@ use App\Controller\ErrorController;
 class ProductController extends ViewController
 {
     public function __construct(private ProductRepository $productRepository) {}
+
     public function index()
     {
         $products = $this->productRepository->getAll();
@@ -32,6 +33,7 @@ class ProductController extends ViewController
             'categories' => $categories
         ]);
     }
+
     public function create()
     {
 
@@ -89,57 +91,34 @@ class ProductController extends ViewController
                     $upload = uploadPhoto($_FILES['photo'], __DIR__ . '/../../public/uploads/tmp');
                     if ($upload['success']) {
                         $tempPhoto = $upload['filename'];
-                        $_SESSION['temp_photos'][] = $tempPhoto;
+                    } else {
+                        $errors[] = $upload['error'];
                     }
                 }
             } else if (!empty($_POST['temp_photo'])) {
                 // Nenhum arquivo novo enviado, mas já existe uma foto temporária de um reload anterior
-                $tempPhotoName = trim((string) $_POST['temp_photo']);
+                $tempPhotoName = basename(trim((string) $_POST['temp_photo']));
                 $tempPath = __DIR__ . '/../../public/uploads/tmp/' . $tempPhotoName;
 
-                // O arquivo precisa pertencer à sessão atual
-                $belongsToSession = in_array($tempPhotoName, $_SESSION['temp_photos'] ?? [], true);
-                if ($belongsToSession) {
-                    $fakeFile = [
-                        'error'     => UPLOAD_ERR_OK,
-                        'name'      => $tempPhotoName,
-                        'tmp_name'  => $tempPath,
-                        'size'      => is_file($tempPath) ? filesize($tempPath) : 0,
-                    ];
-                    $validation = validatePhoto($fakeFile);
+                if (is_file($tempPath)) {
+                    if (empty($errors)) {
+                        // Formulário válido agora move a foto temporária para a pasta definitiva
+                        $finalPath = __DIR__ . '/../../public/uploads/products/' . $tempPhotoName;
 
-                    if (!$validation['success']) {
-                        $errors[] = $validation['error'];
-                    } else if (is_file($tempPath)) {
-                        if (empty($errors)) {
-                            // Formulário válido agora move a foto temporária para a pasta definitiva
-                            $finalPath = __DIR__ . '/../../public/uploads/products/' . $tempPhotoName;
-
-                            if (rename($tempPath, $finalPath)) {
-                                // Apaga a foto antiga do produto, se existir e for diferente da nova
-                                if (!empty($oldPhoto) && $oldPhoto !== $tempPhotoName) {
-                                    $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
-                                    if (is_file($oldPhotoPath)) {
-                                        if (!unlink($oldPhotoPath)) {
-                                            $errors[] = 'Não foi possível deletar a foto antiga.';
-                                        }
-                                    }
-                                }
-                                $photo = $tempPhotoName;
-                            } else {
-                                $errors[] = 'Falha ao salvar a imagem no servidor.';
-                            }
+                        if (rename($tempPath, $finalPath)) {
+                            $photo = $tempPhotoName;
                         } else {
-                            // Ainda há errors mas mantém referência para reexibir no formulário
-                            $tempPhoto = $tempPhotoName;
+                            $errors[] = 'Falha ao salvar a imagem no servidor.';
                         }
+                    } else {
+                        // Ainda há errors mas mantém referência para reexibir no formulário
+                        $tempPhoto = $tempPhotoName;
                     }
                 }
             }
             // Caso não seja encontrado erro(s) adiciona o produto e redireciona
             if (empty($errors)) {
                 $this->productRepository->create($name, $category_id, $tag, $price, $stock, $description, $photo);
-                unset($_SESSION['temp_photos']);
                 header("Location: index.php?route=products/index");
                 return;
             }
@@ -154,7 +133,7 @@ class ProductController extends ViewController
     }
     public function update()
     {
-        $id  = @(int) ($_GET['id'] ?? 0);
+        $id  = (int) ($_GET['id'] ?? 0);
         $product = $this->productRepository->getById($id);
         // Verifica se o produto existe, se não existir redireciona para página de error 404
         if ($product === null) {
@@ -210,15 +189,21 @@ class ProductController extends ViewController
                     if (!$upload['success']) {
                         $errors[] = $upload['error'];
                     } else {
-                        $photo = $upload['filename'];
                         // Apaga a foto antiga do produto, se existir e for diferente da nova
                         if (!empty($oldPhoto) && $oldPhoto !== $upload['filename']) {
                             $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
-                            if (is_file($oldPhotoPath)) {
-                                if (!unlink($oldPhotoPath)) {
-                                    $errors[] = 'Não foi possível deletar a foto antiga.';
+                            if (is_file($oldPhotoPath) && !@unlink($oldPhotoPath)) {
+                                $errors[] = 'Não foi possível deletar a foto antiga do servidor.';
+
+                                // Apaga a foto que acabou de subir
+                                $newPhotoPath = __DIR__ . '/../../public/uploads/products/' . $upload['filename'];
+                                if (is_file($newPhotoPath)) {
+                                    @unlink($newPhotoPath);
                                 }
                             }
+                        }
+                        if (empty($errors)) {
+                            $photo = $upload['filename'];
                         }
                     }
                 } else {
@@ -226,59 +211,49 @@ class ProductController extends ViewController
                     $upload = uploadPhoto($_FILES['photo'], __DIR__ . '/../../public/uploads/tmp');
                     if ($upload['success']) {
                         $tempPhoto = $upload['filename'];
-                        $_SESSION['temp_photos'][] = $tempPhoto;
                     } else {
                         $errors[] = $upload['error'];
                     }
                 }
             } else if (!empty($_POST['temp_photo'])) {
                 // Nenhum arquivo novo enviado, mas já existe uma foto temporária de um reload anterior
-                $tempPhotoName = trim((string) $_POST['temp_photo']);
+                $tempPhotoName = basename(trim((string) $_POST['temp_photo']));
                 $tempPath = __DIR__ . '/../../public/uploads/tmp/' . $tempPhotoName;
 
-                // O arquivo precisa pertencer à sessão atual
-                $belongsToSession = in_array($tempPhotoName, $_SESSION['temp_photos'] ?? [], true);
-                if ($belongsToSession) {
-                    $fakeFile = [
-                        'error'     => UPLOAD_ERR_OK,
-                        'name'      => $tempPhotoName,
-                        'tmp_name'  => $tempPath,
-                        'size'      => is_file($tempPath) ? filesize($tempPath) : 0,
-                    ];
-                    $validation = validatePhoto($fakeFile);
+                if (is_file($tempPath)) {
+                    if (empty($errors)) {
+                        // Formulário válido agora move a foto temporária para a pasta definitiva
+                        $finalPath = __DIR__ . '/../../public/uploads/products/' . $tempPhotoName;
 
-                    if (!$validation['success']) {
-                        $errors[] = $validation['error'];
-                    } else if (is_file($tempPath)) {
-                        if (empty($errors)) {
-                            // Formulário válido agora move a foto temporária para a pasta definitiva
-                            $finalPath = __DIR__ . '/../../public/uploads/products/' . $tempPhotoName;
+                        if (rename($tempPath, $finalPath)) {
+                            // Apaga a foto antiga do produto, se existir e for diferente da nova
+                            if (!empty($oldPhoto) && $oldPhoto !== $tempPhotoName) {
+                                $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
+                                if (is_file($oldPhotoPath) && !@unlink($oldPhotoPath)) {
+                                    $errors[] = 'Não foi possível deletar a foto antiga.';
 
-                            if (rename($tempPath, $finalPath)) {
-                                // Apaga a foto antiga do produto, se existir e for diferente da nova
-                                if (!empty($oldPhoto) && $oldPhoto !== $tempPhotoName) {
-                                    $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
-                                    if (is_file($oldPhotoPath)) {
-                                        if (!unlink($oldPhotoPath)) {
-                                            $errors[] = 'Não foi possível deletar a foto antiga.';
-                                        }
+                                    // Apaga a foto movida caso a antiga não possa ser deletada
+                                    if (is_file($finalPath)) {
+                                        @unlink($finalPath);
                                     }
                                 }
+                            }
+                            // Salva nome da nova foto se não ocorreu erro
+                            if (empty($errors)) {
                                 $photo = $tempPhotoName;
-                            } else {
-                                $errors[] = 'Falha ao salvar a imagem no servidor.';
                             }
                         } else {
-                            // Ainda há errors mas mantém referência para reexibir no formulário
-                            $tempPhoto = $tempPhotoName;
+                            $errors[] = 'Falha ao salvar a imagem no servidor.';
                         }
+                    } else {
+                        // Ainda há errors mas mantém referência para reexibir no formulário
+                        $tempPhoto = $tempPhotoName;
                     }
                 }
             }
 
             if (empty($errors)) {
                 $this->productRepository->update($id, $name, $category_id, $tag, $price, $stock, $description, $photo);
-                unset($_SESSION['temp_photos']);
                 header("Location: index.php?route=products/index");
                 return;
             }

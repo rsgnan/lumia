@@ -39,14 +39,15 @@
                 <div class="form-grid">
                     <div class="form-group full">
                         <label class="form-label">Nome do Produto</label>
-                        <input class="form-input" type="text" name="name" value="<?php if (!empty($_POST['name'])) echo e($_POST['name']); ?>" placeholder="Ex: Saia de Malha com Bolso">
+                        <input class="form-input" type="text" name="name" value="<?php echo e($_POST['name'] ?? ''); ?>" placeholder="Ex: Saia de Malha com Bolso">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Categoria</label>
                         <select class="form-select" name="category_id">
+                            <?php $selectedCategory = $_POST['category_id'] ?? ''; ?>
                             <option value="">Categoria do Produto</option>
                             <?php foreach ($categories as $category): ?>
-                                <option value="<?php echo e($category->id); ?>" <?php if (!empty($_POST['category_id']) && $category->id == $_POST['category_id']) echo e(" selected"); ?>>
+                                <option value="<?php echo e($category->id); ?>" <?php echo $category->id == $selectedCategory ? 'selected' : ''; ?>>
                                     <?php echo e($category->name); ?>
                                 </option>
                                 <?php endforeach; ?>
@@ -54,11 +55,11 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Tag</label>
-                        <input class="form-input" type="text" name="tag" value="<?php if (!empty($_POST['tag'])) echo e($_POST['tag']); ?>" placeholder="Ex: Rendada">
+                        <input class="form-input" type="text" name="tag" value="<?php echo e($_POST['tag'] ?? ''); ?>" placeholder="Ex: Rendada">
                     </div>
                     <div class="form-group full">
                         <label class="form-label">Descrição</label>
-                        <textarea class="form-textarea" name="description" placeholder="Descreva o produto..."><?php if (!empty($_POST['description'])) echo e($_POST['description']); ?></textarea>
+                        <textarea class="form-textarea" name="description" placeholder="Descreva o produto..."><?php echo e($_POST['description'] ?? ''); ?></textarea>
                     </div>
                 </div>
             </div>
@@ -74,11 +75,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Preço (R$)</label>
-                        <input class="form-input" type="number" name="price" min="0" value="<?php if (!empty($_POST['price'])) echo e($_POST['price']); ?>" placeholder="0,00">
+                        <input class="form-input" type="number" name="price" min="0" value="<?php echo e($_POST['price'] ?? ''); ?>" placeholder="0,00" step="0.01">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input class="form-input" type="number" name="stock" min="0" value="<?php if (!empty($_POST['stock'])) echo e($_POST['stock']); ?>" placeholder="0">
+                        <input class="form-input" type="number" name="stock" min="0" value="<?php echo e($_POST['stock'] ?? ''); ?>" placeholder="0">
                     </div>
                 </div>
             </div>

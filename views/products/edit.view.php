@@ -9,7 +9,7 @@
             </a>
             <div>
                 <h1>Editar Produto</h1>
-                <p>Preencha as informações editar as informações do produto</p>
+                <p>Preencha as informações para editar o produto</p>
             </div>
         </div>
     </div>
@@ -40,14 +40,15 @@
                     <div class="form-group full">
                         <label class="form-label">Nome do Produto</label>
                         <input class="form-input" type="hidden" name="product_id" value="<?php echo e($product->id); ?>">
-                        <input class="form-input" type="text" name="name" value="<?php echo e($product->name); ?>">
+                        <input class="form-input" type="text" name="name" value="<?php echo e($_POST['name'] ?? $product->name); ?>">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Categoria</label>
                         <select class="form-select" name="category_id">
                             <option value="">Categoria do Produto</option>
+                            <?php $selectedCategory = $_POST['category_id'] ?? $product->category_id; ?>
                             <?php foreach ($categories as $category): ?>
-                                <option value="<?php echo e($category->id); ?>" <?php if ($category->id == $product->category_id) echo e("selected"); ?>>
+                                <option value="<?php echo e($category->id); ?>" <?php echo $category->id == $selectedCategory ? 'selected' : ''; ?>>
                                     <?php echo e($category->name); ?>
                                 </option>
                             <?php endforeach; ?>
@@ -55,11 +56,11 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Tag</label>
-                        <input class="form-input" type="text" name="tag" value="<?php echo e($product->tag); ?>">
+                        <input class="form-input" type="text" name="tag" value="<?php echo e($_POST['tag'] ?? $product->tag); ?>">
                     </div>
                     <div class="form-group full">
                         <label class="form-label">Descrição</label>
-                        <textarea class="form-textarea" name="description"><?php echo e($product->description); ?></textarea>
+                        <textarea class="form-textarea" name="description"><?php echo e($_POST['description'] ?? $product->description); ?></textarea>
                     </div>
                 </div>
             </div>
@@ -75,11 +76,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Preço (R$)</label>
-                        <input class="form-input" type="number" name="price" value="<?php echo e($product->price); ?>">
+                        <input class="form-input" type="number" name="price" value="<?php echo e($_POST['price'] ?? $product->price); ?>" step="0.01">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input class="form-input" type="number" name="stock" value="<?php echo e($product->stock); ?>">
+                        <input class="form-input" type="number" name="stock" value="<?php echo e($_POST['stock'] ?? $product->stock); ?>">
                     </div>
                 </div>
             </div>
@@ -92,15 +93,19 @@
                 <?php
                 // Prioriza a foto temporária, caso não haja, cai para a foto já salva do produto.
                 $hasPreview = !empty($tempPhoto) || !empty($product->photo);
-                $previewSrc = !empty($tempPhoto)
-                    ? 'uploads/tmp/' . e($tempPhoto)
-                    : (!empty($product->photo) ? 'uploads/products/' . e($product->photo) : '');
+                $previewSrc = '';
+
+                if (!empty($tempPhoto)) {
+                    $previewSrc = 'uploads/tmp/' . $tempPhoto;
+                } else if (!empty($product->photo)) {
+                    $previewSrc = 'uploads/products/' . $product->photo;
+                }
                 ?>
                 <label class="image-upload" for="product-image-input">
                     <img id="image-preview" class="image-preview"
                         src="<?php echo e($previewSrc); ?>"
                         alt="Pré-visualização"
-                        style="<?php echo e($hasPreview) ? '' : 'display:none;'; ?>">
+                        style="<?php echo $hasPreview ? '' : 'display:none;'; ?>">
                     <svg id="image-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="<?php echo $hasPreview ? 'display:none;' : ''; ?>">
                         <path d="M4 16l4.6-4.6a2 2 0 012.8 0L16 16" />
                         <path d="M14 14l1.6-1.6a2 2 0 012.8 0L20 14" />
