@@ -36,7 +36,8 @@ if($route == 'pages') {
     $page = @(string) ($_GET['page'] ?? 'index');
 
     $adminController = $container->get('productController');
-    $adminController->showPage($page);
+    $adminController->index();
+
 } else if ($route === 'products/index') {
     $adminController = $container->get('productController');
     $adminController->index();

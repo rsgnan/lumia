@@ -15,19 +15,19 @@
     </div>
     <div class="form-panel">
         <?php if (!empty($errors)): ?>
-        <div class="alert alert-error">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            <ul class="alert-list">
-                <?php foreach ($errors as $error): ?>
-                    <li><?php echo e($error); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+            <div class="alert alert-error">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <ul class="alert-list">
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="card">
             <div class="card-header">
                 <div>
@@ -45,10 +45,10 @@
                     <div class="form-group">
                         <label class="form-label">Categoria</label>
                         <select class="form-select" name="category_id">
-                                <option value="">Categoria do Produto</option>
+                            <option value="">Categoria do Produto</option>
                             <?php foreach ($categories as $category): ?>
                                 <option value="<?php echo e($category->id); ?>" <?php if ($category->id == $product->category_id) echo e("selected"); ?>>
-                                <?php echo e($category->name); ?>
+                                    <?php echo e($category->name); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -66,8 +66,10 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <div class="card-title">Preço e Estoque</div>
-                <div class="card-subtitle">Valores de venda e controle de inventário</div>
+                <div>
+                    <div class="card-title">Preço e Estoque</div>
+                    <div class="card-subtitle">Valores de venda e controle de inventário</div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="form-grid">
@@ -91,11 +93,11 @@
                 // Prioriza a foto temporária, caso não haja, cai para a foto já salva do produto.
                 $hasPreview = !empty($tempPhoto) || !empty($product->photo);
                 $previewSrc = !empty($tempPhoto)
-                    ? 'uploads/tmp' . e($tempPhoto)
+                    ? 'uploads/tmp/' . e($tempPhoto)
                     : (!empty($product->photo) ? 'uploads/products/' . e($product->photo) : '');
                 ?>
                 <label class="image-upload" for="product-image-input">
-                    <img class="image-preview" class="image-preview"
+                    <img id="image-preview" class="image-preview"
                         src="<?php echo e($previewSrc); ?>"
                         alt="Pré-visualização"
                         style="<?php echo e($hasPreview) ? '' : 'display:none;'; ?>">

@@ -181,6 +181,8 @@ class ProductController extends ViewController
                     $upload = uploadPhoto($_FILES['photo'], __DIR__ . '/../../public/uploads/tmp');
                     if ($upload['success']) {
                         $tempPhoto = $upload['filename'];
+                    } else {
+                        $errors[] = $upload['error'];
                     }
                 }
             } else if (!empty($_POST['temp_photo'])) {

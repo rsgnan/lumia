@@ -37,11 +37,11 @@
                         <td><strong><?php echo e($product->name); ?></strong></td>
                         <td><?php echo e($product->category_name); ?></td>
                         <td><?php echo e($product->stock); ?></td>
-                        <td><?php echo e($product->price); ?></span>
+                        <td><?php echo e($product->price); ?></td>
                         <td>
                             <div class="actions">
                                 <a href="?route=products/edit&id=<?php echo e($product->id); ?>" class="btn btn-ghost btn-sm">Editar</a>
-                                <button class="btn btn-danger btn-sm">Remover</button>
+                                <!-- <button class="btn btn-danger btn-sm">Remover</button> -->
                         </td>
                     </tr>
                 <?php endforeach; ?>
