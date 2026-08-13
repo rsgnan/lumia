@@ -17,12 +17,12 @@ function validatePhoto(array $file): array
 
     // Verifica erros do próprio PHP
     switch ($file['error']) {
-        case UPLOAD_ERR_OK;
+        case UPLOAD_ERR_OK:
             break;
-        case UPLOAD_ERR_NO_FILE;
+        case UPLOAD_ERR_NO_FILE:
             return ['success' => false, 'error' => 'Nenhum arquivo enviado.'];
-        case UPLOAD_ERR_INI_SIZE;
-        case UPLOAD_ERR_FORM_SIZE;
+        case UPLOAD_ERR_INI_SIZE:
+        case UPLOAD_ERR_FORM_SIZE:
             return ['success' => false, 'error' => 'Arquivo excedo o tamanho permitido pelo servidor.'];
         default:
             return ['success' => false, 'error' => 'Erro desconhecido no upload.'];
@@ -73,7 +73,7 @@ function uploadPhoto(array $file, string $uploadDir): array
 
     // Gera um nome único, mantendo a extensão original
     $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $filename = uniqid('product_', true) . '.' . $extension;
+    $filename = 'product_' . session_id() . '_' . uniqid('', true) . '.' . $extension;
     $destination = rtrim($uploadDir, '/') . '/' . $filename;
 
     if (!move_uploaded_file($file['tmp_name'], $destination)) {

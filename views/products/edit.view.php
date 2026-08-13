@@ -76,11 +76,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Preço (R$)</label>
-                        <input class="form-input" type="number" name="price" value="<?php echo e($_POST['price'] ?? $product->price); ?>" step="0.01">
+                        <input class="form-input" type="number" name="price" step="0.01" value="<?php echo e($_POST['price'] ?? $product->price); ?>">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input class="form-input" type="number" name="stock" value="<?php echo e($_POST['stock'] ?? $product->stock); ?>">
+                        <input class="form-input" type="number" name="stock" step="1" value="<?php echo e($_POST['stock'] ?? $product->stock); ?>">
                     </div>
                 </div>
             </div>

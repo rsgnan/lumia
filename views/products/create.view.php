@@ -75,11 +75,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Preço (R$)</label>
-                        <input class="form-input" type="number" name="price" min="0" value="<?php echo e($_POST['price'] ?? ''); ?>" placeholder="0,00" step="0.01">
+                        <input class="form-input" type="number" name="price" min="0" step="0.01" value="<?php echo e($_POST['price'] ?? ''); ?>" placeholder="0,00">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input class="form-input" type="number" name="stock" min="0" value="<?php echo e($_POST['stock'] ?? ''); ?>" placeholder="0">
+                        <input class="form-input" type="number" name="stock" min="0" step="1" value="<?php echo e($_POST['stock'] ?? ''); ?>" placeholder="0">
                     </div>
                 </div>
             </div>
