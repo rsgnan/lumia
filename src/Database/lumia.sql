@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3-2.fc44
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 08, 2026 at 03:26 PM
--- Server version: 11.8.8-MariaDB
--- PHP Version: 8.5.9
+-- Tempo de geração: 13/08/2026 às 15:26
+-- Versão do servidor: 11.8.8-MariaDB
+-- Versão do PHP: 8.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,15 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lumia`
+-- Banco de dados: `lumia`
 --
-CREATE DATABASE IF NOT EXISTS `lumia` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci;
-USE `lumia`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Estrutura para tabela `categories`
 --
 
 CREATE TABLE `categories` (
@@ -37,17 +35,16 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Dumping data for table `categories`
+-- Despejando dados para a tabela `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Vestuários', '2026-08-01 15:56:53', '2026-08-01 15:56:53'),
-(2, 'Pedras', '2026-08-07 14:34:51', '2026-08-07 14:34:51');
+(1, 'Vestuários', '2026-08-01 15:56:53', '2026-08-01 15:56:53');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Estrutura para tabela `products`
 --
 
 CREATE TABLE `products` (
@@ -64,24 +61,17 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 --
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `name`, `category_id`, `tag`, `price`, `stock`, `description`, `photo`, `created_at`, `updated_at`) VALUES
-(12, 'Teste de produto', 1, 'Teste', 25.00, 100, 'testando a descrição', 'product_6a72ba47de464.png', '2026-08-05 01:21:27', '2026-08-05 01:21:27');
-
---
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `categories`
+-- Índices de tabela `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `products`
+-- Índices de tabela `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
@@ -89,27 +79,27 @@ ALTER TABLE `products`
   ADD KEY `idx_products_name` (`name`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `categories`
+-- AUTO_INCREMENT de tabela `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT de tabela `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restrições para tabelas despejadas
 --
 
 --
--- Constraints for table `products`
+-- Restrições para tabelas `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE;

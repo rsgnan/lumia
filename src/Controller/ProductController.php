@@ -210,6 +210,7 @@ class ProductController extends ViewController
                     if (!$upload['success']) {
                         $errors[] = $upload['error'];
                     } else {
+                        $photo = $upload['filename'];
                         // Apaga a foto antiga do produto, se existir e for diferente da nova
                         if (!empty($oldPhoto) && $oldPhoto !== $upload['filename']) {
                             $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
