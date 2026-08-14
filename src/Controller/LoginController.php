@@ -20,11 +20,11 @@ class LoginController extends ViewController
 
         $loginError = false;
         if (!empty($_POST)) {
-            $email = @(string) ($_POST['email'] ?? '');
+            $username = @(string) ($_POST['username'] ?? '');
             $password = @(string) ($_POST['password'] ?? '');
 
-            if (!empty($email) && !empty($password)) {
-                $loginOK = $this->authService->handleLogin($email, $password);
+            if (!empty($username) && !empty($password)) {
+                $loginOK = $this->authService->handleLogin($username, $password);
                 if ($loginOK == true) {
                     header('Location: index.php?' . http_build_query(['route' => 'products/index']));
                     return;
@@ -36,8 +36,6 @@ class LoginController extends ViewController
             }
         }
 
-        $this->render('login/index', [
-            'loginError' => $loginError
-        ]);
+         header('Location: login.php');
     }
 }
