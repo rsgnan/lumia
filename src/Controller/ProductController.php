@@ -5,10 +5,16 @@ namespace App\Controller;
 use App\Core\ViewController;
 use App\Repository\ProductRepository;
 use App\Controller\ErrorController;
+use App\Support\AuthService;
 
 class ProductController extends ViewController
 {
-    public function __construct(private ProductRepository $productRepository) {}
+    public function __construct(
+        AuthService $authService,
+        private ProductRepository $productRepository) 
+        {
+            parent::__construct($authService);
+        }
 
     public function index()
     {

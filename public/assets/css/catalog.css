@@ -75,7 +75,7 @@ body.shop-body {
 /* HERO */
 .shop-hero {
     position: relative;
-    padding: 72px 40px 56px;
+    padding: 36px 40px 28px;
     text-align: center;
     overflow: hidden;
 }
@@ -97,7 +97,7 @@ body.shop-body {
 }
 
 .shop-hero h1 {
-    font-size: 42px;
+    font-size: 28px;
     font-weight: 900;
     letter-spacing: -1px;
     line-height: 1.15;
@@ -265,19 +265,51 @@ body.shop-body {
     margin-bottom: 4px;
 }
 
+.shop-card-sizes {
+    display: flex;
+    gap: 6px;
+    margin: 6px 0;
+}
+
+.size-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+}
+
+.shop-card-details-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.shop-card-details-btn:hover {
+    background: var(--accent);
+}
+
 .shop-card-footer {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: left;
     justify-content: space-between;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
-    margin-top: 4px;
 }
 
 .shop-card-price {
     font-size: 18px;
     font-weight: 800;
     color: var(--text);
+    text-align: left;
 }
 
 .shop-card-price small {

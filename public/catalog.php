@@ -14,8 +14,8 @@
 
     <header class="shop-navbar">
         <div class="logo">
-            <div class="logo-icon">MR</div>
-            <div class="logo-text">Mirongas</div>
+            <div class="logo-icon">LM</div>
+            <div class="logo-text">Lumia</div>
         </div>
         <nav class="shop-nav-links">
             <a href="#" class="active">Catálogo</a>
@@ -32,7 +32,7 @@
 
     <section class="shop-hero">
         <div class="shop-hero-eyebrow">Nova coleção</div>
-        <h1>Roupas &amp; acessórios com <span>estilo Mirongas</span></h1>
+        <h1>Peças selecionadas <span>para o seu axé</span></h1>
         <p>Explore nosso catálogo completo de peças e acessórios selecionados para você.</p>
     </section>
 
@@ -51,12 +51,18 @@
                     <span class="shop-card-tag">Novo</span>
                     <span class="shop-card-stock"><span class="badge green">Em estoque</span></span>
                 </div>
-                <div class="shop-card-body">
+               <div class="shop-card-body">
                     <div class="shop-card-category">Vestuários</div>
-                    <h3 class="shop-card-name">Filá Masculino de Brim</h3>
-                    <p class="shop-card-desc">Confeccionado em tecido brim de alta durabilidade, este filá masculino oferece estrutura firme e excelente encaixe na cabeça, sendo ideal para a proteção da coroa durante as giras e trabalhos espirituais. Resistente e prático, é perfeito para o uso diário no terreiro.</p>
+                    <h3 class="shop-card-name">Saia Preta feita em Lese</h3>
+                    <div class="shop-card-sizes">
+                        <span class="size-badge">P</span>
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                        <span class="size-badge">GG</span>
+                    </div>
                     <div class="shop-card-footer">
-                        <div class="shop-card-price"><small>R$</small>45,00</div>
+                        <div class="shop-card-price"><small>R$</small>70,00</div>
+                        <button class="shop-card-details-btn">Ver detalhes</button>
                     </div>
                 </div>
             </article>
@@ -68,10 +74,16 @@
                 </div>
                 <div class="shop-card-body">
                     <div class="shop-card-category">Vestuários</div>
-                    <h3 class="shop-card-name">Saia Branca feita em Lese</h3>
-                    <p class="shop-card-desc">Confeccionada em tecido lese 100% algodão de alta qualidade, esta saia branca combina leveza, delicadeza e resistência, oferecendo excelente caimento e conforto para as giras e trabalhos espirituais. O bordado em lese confere um visual tradicional e respeitoso, ideal para a representação do seu axé no terreiro.</p>
+                    <h3 class="shop-card-name">Saia Preta feita em Lese</h3>
+                    <div class="shop-card-sizes">
+                        <span class="size-badge">P</span>
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                        <span class="size-badge">GG</span>
+                    </div>
                     <div class="shop-card-footer">
                         <div class="shop-card-price"><small>R$</small>70,00</div>
+                        <button class="shop-card-details-btn">Ver detalhes</button>
                     </div>
                 </div>
             </article>
@@ -84,9 +96,15 @@
                 <div class="shop-card-body">
                     <div class="shop-card-category">Vestuários</div>
                     <h3 class="shop-card-name">Saia Preta feita em Lese</h3>
-                    <p class="shop-card-desc">Confeccionada em tecido lese 100% algodão de alta qualidade, esta saia branca combina leveza, delicadeza e resistência, oferecendo excelente caimento e conforto para as giras e trabalhos espirituais. O bordado em lese confere um visual tradicional e respeitoso, ideal para a representação do seu axé no terreiro.</p>
+                    <div class="shop-card-sizes">
+                        <span class="size-badge">P</span>
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                        <span class="size-badge">GG</span>
+                    </div>
                     <div class="shop-card-footer">
                         <div class="shop-card-price"><small>R$</small>70,00</div>
+                        <button class="shop-card-details-btn">Ver detalhes</button>
                     </div>
                 </div>
             </article>
@@ -98,10 +116,16 @@
                 </div>
                 <div class="shop-card-body">
                     <div class="shop-card-category">Vestuários</div>
-                    <h3 class="shop-card-name">Pano Oferenca Exú</h3>
-                    <p class="shop-card-desc">Confeccionada em tecido lese 100% algodão de alta qualidade, esta saia branca combina leveza, delicadeza e resistência, oferecendo excelente caimento e conforto para as giras e trabalhos espirituais. O bordado em lese confere um visual tradicional e respeitoso, ideal para a representação do seu axé no terreiro.</p>
+                    <h3 class="shop-card-name">Saia Preta feita em Lese</h3>
+                    <div class="shop-card-sizes">
+                        <span class="size-badge">P</span>
+                        <span class="size-badge">M</span>
+                        <span class="size-badge">G</span>
+                        <span class="size-badge">GG</span>
+                    </div>
                     <div class="shop-card-footer">
-                        <div class="shop-card-price"><small>R$</small>60,00</div>
+                        <div class="shop-card-price"><small>R$</small>70,00</div>
+                        <button class="shop-card-details-btn">Ver detalhes</button>
                     </div>
                 </div>
             </article>
