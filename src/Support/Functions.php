@@ -73,14 +73,14 @@ function uploadPhoto(array $file, string $uploadDir): array
 
     // Gera um nome único, mantendo a extensão original
     $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $filename = 'product_' . session_id() . '_' . uniqid('', true) . '.' . $extension;
+    $filename = uniqid('product_', true) . '.' . $extension;
     $destination = rtrim($uploadDir, '/') . '/' . $filename;
 
     if (!move_uploaded_file($file['tmp_name'], $destination)) {
         return ['success' => false, 'filename' => null, 'error' => 'Falha ao salvar a imagem no servidor.'];
     }
 
-    // Limpeza dos uploads em /tmp
+    // Limpeza dos uploads em /tmp com mais de 2 horas
     $tmpDir = __DIR__ . '/../../public/uploads/tmp';
     cleanOldTempFiles($tmpDir, 7200);
 
