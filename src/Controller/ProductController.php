@@ -59,12 +59,12 @@ class ProductController extends ViewController
             }
         }
 
-            // Renderiza a página de adicionar produto
-            $this->render('products/create', [
-                'errors' => $errors,
-                'categories' => $categories,
-                'tempPhoto' => $tempPhoto
-            ]);
+        // Renderiza a página de adicionar produto
+        $this->render('products/create', [
+            'errors' => $errors,
+            'categories' => $categories,
+            'tempPhoto' => $tempPhoto
+        ]);
     }
 
     public function update()
@@ -98,28 +98,29 @@ class ProductController extends ViewController
 
             $photo = $this->handlePhoto($errors, $tempPhoto, $oldPhoto);
 
-            // Se o formulário é válido e a foto mudou, apaga a foto antiga
-            if (empty($errors) && !empty($oldPhoto) && $oldPhoto !== $photo) {
-                $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
-                if (is_file($oldPhotoPath)) {
-                    @unlink($oldPhotoPath);
-                }
-            }
 
             if (empty($errors)) {
                 $this->productRepository->update($id, $name, $category_id, $tag, $price, $stock, $description, $photo);
+
+                // Só apaga a foto antiga depois do UPDATE no banco for confirmado
+                if (!empty($oldPhoto) && $oldPhoto !== $photo) {
+                    $oldPhotoPath = __DIR__ . '/../../public/uploads/products/' . $oldPhoto;
+                    if (is_file($oldPhotoPath)) {
+                        @unlink($oldPhotoPath);
+                    }
+                }
+
                 header("Location: index.php?route=products/index");
                 return;
             }
-
-            // Renderiza a página de editar produto
-            $this->render('products/edit', [
-                'product' => $product,
-                'errors' => $errors,
-                'categories' => $categories,
-                'tempPhoto' => $tempPhoto
-            ]);
         }
+        // Renderiza a página de editar produto
+        $this->render('products/edit', [
+            'product' => $product,
+            'errors' => $errors,
+            'categories' => $categories,
+            'tempPhoto' => $tempPhoto
+        ]);
     }
 
     private function validateFields(string $name, int $category_id, int $stock, float $price, array &$errors): void
