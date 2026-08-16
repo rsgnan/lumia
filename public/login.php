@@ -15,14 +15,14 @@
     <div class="login-wrap">
         <div class="login-brand">
             <div class="logo-icon">LM</div>
-            <div class="logo-text">Lumia<span>Panel</span></div>
+            <div class="logo-text">Lumia <span>Panel</span></div>
         </div>
 
         <div class="card login-card">
 
             <!-- Caixa de alertas -->
             <div class="login-alert error" id="loginAlert">
-                <svg viewBox="0 0 24 24" fille="none" stroke="currentColor" stroke-width="2.5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <circle cx="12" cy="12" r="9" />
                     <line x1="12" y1="8" x2="12" y2="13" />
                     <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -30,18 +30,18 @@
                 <span id="loginAlertText">Usuário ou senha incorretos. Tente novamente.</span>
             </div>
 
-                <h1 class="login-title">Acessar Painel.</span>
+                <h1 class="login-title">Acessar Painel</h1>
                 <p class="login-subtitle">Entre com suas credenciais para continuar</p>
 
-                <form class="login-form" id="loginForm">
+                <form method="POST" action="index.php?<?php echo http_build_query(['route' => 'admin/login']); ?>" class="login-form" id="loginForm">
                     <div class="form-group">
                         <label class="form-label">Usuário</label>
-                        <input class="form-input" type="text" id="username" name="username" placeholder="Digite seu usuário" autocomplete="username" required>
+                        <input class="form-input" type="text" id="username" name="username" value="<?php if (!empty($_POST['username'])) echo e($_POST['username']); ?>) placeholder="Digite seu usuário" autocomplete="username" required>
                     </div>
 
                     <div class="form-group login-field">
                         <label class="form-label">Senha</label>
-                        <input class="form-input" type="password" id="password" name="password" placeholder="••••••" autocomplete="current-password" required>
+                        <input class="form-input" type="password" id="password" name="password" placeholder="Digite sua senha" autocomplete="current-password" required>
                         <button type="button" class="login-toggle-pass" id="togglePass" aria-label="Mostrar senha">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -53,7 +53,7 @@
                     <div class="login-options">
                         <label class="login-remember">
                             <input type="checkbox" id="remember" name="remember">
-                            Lembrar de mim
+                            Lembrar-me
                         </label>
                         <a href="#">Esqueci minha senha</a>
                     </div>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <script>
-        // Vizibilidade da Senha
+        // Visibilidade da Senha
         document.getElementById('togglePass').addEventListener('click', () => {
             const pass = document.getElementById('password');
             pass.type = pass.type === 'password' ? 'text' : 'password';
