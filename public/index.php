@@ -40,6 +40,20 @@ $container->bind('productController', function () use ($container) {
     );
 });
 
+// CSRF
+$container->bind('csrfHelper', function() {
+    return new \App\Support\CsrfHelper();
+});
+
+$csrfHelper = $container->get('csrfHelper');
+$csrfHelper->handle();
+
+function csrf_token() {
+    global $container;
+    $csrfHelper = $container->get('csrfHelper');
+    return $csrfHelper->generateToken();
+}
+
 // Errors
 $container->bind('errorController', function () use ($container) {
     return new \App\Controller\ErrorController();

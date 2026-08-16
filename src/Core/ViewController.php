@@ -22,4 +22,12 @@ abstract class ViewController
         require __DIR__ . '/../../views/layouts/main.view.php';
     }
 
+    // Renderiza uma página sozinha
+    protected function renderStandalone(string $view, array $params): void 
+    {
+        extract($params);
+
+        require __DIR__ . '/../../views/' . $view . '.view.php';
+    }
+
 }

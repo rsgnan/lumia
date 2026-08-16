@@ -16,9 +16,11 @@ class LoginController extends ViewController
     {
         if ($this->authService->isLoggedIn()) {
             header('Location: index.php?' . http_build_query(['route' => 'products/index']));
+            return;
         }
 
         $loginError = false;
+        $username = '';
         if (!empty($_POST)) {
             $username = @(string) ($_POST['username'] ?? '');
             $password = @(string) ($_POST['password'] ?? '');
@@ -36,6 +38,9 @@ class LoginController extends ViewController
             }
         }
 
-         header('Location: login.php');
+        $this->renderStandalone('admin/login', [
+            'loginError' => $loginError,
+            'oldUsername' => $username
+        ]);
     }
 }

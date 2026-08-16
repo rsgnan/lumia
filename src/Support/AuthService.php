@@ -22,13 +22,13 @@ class AuthService
         session_regenerate_id();
     }
 
-    public function handleLogin(string $email, string $password): bool
+    public function handleLogin(string $username, string $password): bool
     {
-        if (empty($email)) return false;
+        if (empty($username)) return false;
         if (empty($password)) return false;
 
-        $stmt = $this->pdo->prepare('SELECT `id`, `password` FROM `users` WHERE `email` = :email');
-        $stmt->bindValue(':email', $email);
+        $stmt = $this->pdo->prepare('SELECT `id`, `password` FROM `users` WHERE `username` = :username');
+        $stmt->bindValue(':username', $username);
         $stmt->execute();
         $entry = $stmt->fetch(PDO::FETCH_ASSOC);
 
