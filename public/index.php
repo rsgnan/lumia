@@ -40,18 +40,41 @@ $container->bind('productController', function () use ($container) {
     );
 });
 
+// Vendas
+$container->bind('saleRepository', function () use ($container) {
+    $pdo = $container->get('pdo');
+    return new \App\Repository\SaleRepository($pdo);
+});
+
+$container->bind('saleController', function () use ($container) {
+    $authService = $container->get('authService');
+    $saleRepository = $container->get('saleRepository');
+    $productRepository = $container->get('productRepository');
+    return new \App\Controller\SaleController(
+        $authService,
+        $saleRepository,
+        $productRepository
+    );
+});
+
 // CSRF
-$container->bind('csrfHelper', function() {
+$container->bind('csrfHelper', function () {
     return new \App\Support\CsrfHelper();
 });
 
 $csrfHelper = $container->get('csrfHelper');
-$csrfHelper->handle();
+$csrfHelper->handle((string) ($_GET['route'] ?? 'products'));
 
-function csrf_token() {
+function csrf_token()
+{
     global $container;
     $csrfHelper = $container->get('csrfHelper');
     return $csrfHelper->generateToken();
+}
+
+function csrf_field(): string
+{
+    return '<input type="hidden" name="_csrf" value="' . e(csrf_token()) . '">';
 }
 
 // Errors
@@ -95,6 +118,15 @@ if ($route == 'pages') {
 } else if ($route === 'login/index') {
     $adminController = $container->get('productController');
     $adminController->update();
+} else if ($route === 'sales/index') {
+    $salesController = $container->get('saleController');
+    $salesController->index();
+    } else if ($route === 'sales/create') {
+        $authService = $container->get('authService');
+    $authService->ensureLoggedIn();
+
+    $salesController = $container->get('saleController');
+    $salesController->create();
 } else {
     // Nenhuma rota bateu então devolve o error 404
     $errorController = $container->get('errorController');

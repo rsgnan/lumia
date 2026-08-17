@@ -1,9 +1,10 @@
 <!-- PRODUTOS -->
 <div class="page active" id="page-produtos">
+    <?php echo csrf_field(); ?>
     <div class="page-header">
         <div>
             <h1>Produtos</h1>
-            <p>587 produtos cadastrados</p>
+            <p><?php echo e(count($products)); ?> produtos cadastrados</p>
         </div>
         <a href="?route=products/create" class="btn btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">

@@ -34,7 +34,7 @@
             <p class="login-subtitle">Entre com suas credenciais para continuar</p>
 
             <form method="POST" action="index.php?<?php echo http_build_query(['route' => 'admin/login']); ?>" class="login-form" id="loginForm">
-                <input type="hidden" name="_csrf" value="<?php echo e(csrf_token()); ?>" />
+                <?php echo csrf_field(); ?>
                 <div class="form-group">
                     <label class="form-label">Usuário</label>
                     <input class="form-input" type="text" id="username" name="username" value="<?php echo e($oldUsername ?? ''); ?>" placeholder="Digite seu usuário" autocomplete="username" required>

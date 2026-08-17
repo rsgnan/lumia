@@ -1,4 +1,5 @@
 <form method="POST" enctype="multipart/form-data">
+    <?php echo csrf_field(); ?>
     <div class="page-header">
         <div class="page-header-left">
             <a class="btn btn-ghost btn-icon" href="?route=products/index" title="Voltar para Produtos">
