@@ -127,6 +127,14 @@ if ($route == 'pages') {
 
     $salesController = $container->get('saleController');
     $salesController->create();
+
+    } else if ($route === 'sales/edit') {
+        $authService = $container->get('authService');
+    $authService->ensureLoggedIn();
+
+    $salesController = $container->get('saleController');
+    $salesController->update();
+    
 } else {
     // Nenhuma rota bateu então devolve o error 404
     $errorController = $container->get('errorController');

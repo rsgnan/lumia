@@ -7,6 +7,7 @@
     <title>Lumia - Painel Administrativo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="assets/css/admin.css" rel="stylesheet">
+    <link href="assets/css/sale.css" rel="stylesheet">
 </head>
 
 <body>
