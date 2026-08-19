@@ -52,8 +52,8 @@ $container->bind('saleController', function () use ($container) {
     $productRepository = $container->get('productRepository');
     return new \App\Controller\SaleController(
         $authService,
-        $saleRepository,
-        $productRepository
+        $productRepository,
+        $saleRepository
     );
 });
 
@@ -121,20 +121,18 @@ if ($route == 'pages') {
 } else if ($route === 'sales/index') {
     $salesController = $container->get('saleController');
     $salesController->index();
-    } else if ($route === 'sales/create') {
-        $authService = $container->get('authService');
+} else if ($route === 'sales/create') {
+    $authService = $container->get('authService');
     $authService->ensureLoggedIn();
 
     $salesController = $container->get('saleController');
     $salesController->create();
-
-    } else if ($route === 'sales/edit') {
-        $authService = $container->get('authService');
+} else if ($route === 'sales/edit') {
+    $authService = $container->get('authService');
     $authService->ensureLoggedIn();
 
     $salesController = $container->get('saleController');
     $salesController->update();
-    
 } else {
     // Nenhuma rota bateu então devolve o error 404
     $errorController = $container->get('errorController');

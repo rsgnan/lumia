@@ -19,7 +19,7 @@
     --yellow: #eab308;
     --text: #e8ecf4;
     --muted: #6b7280;
-    --sidebar-w: 240px
+    --sidebar-w: 240px;
 }
 
 body {
@@ -580,7 +580,7 @@ body {
 
 .image-upload:hover {
     border-color: var(--accent);
-    background: rgba(79, 110. 247, 0.05);
+    background: rgba(79, 110, 247, 0.05);
 }
 
 .image-upload svg {
