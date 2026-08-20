@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\ViewController;
 use App\Support\AuthService;
+use App\Controller\ErrorController;
 use App\Repository\ProductRepository;
 use App\Repository\SaleRepository;
 use App\Repository\SaleItemRepository;
@@ -86,10 +87,14 @@ class SaleController extends ViewController
                             $itemSubtotal
                         );
 
-                        $this->productRepository->decreaseStock(
+                        $stockUpdated = $this->productRepository->decreaseStock(
                             $product->id,
                             $quantity
                         );
+
+                        if (!$stockUpdated) {
+                            throw new \Exception('Estoque insuficiente.');
+                        }
                     }
 
                     $this->pdo->commit();
@@ -109,6 +114,75 @@ class SaleController extends ViewController
             'errors' => $errors,
             'products' => $products
         ]);
+    }
+
+    public function edit(): void
+    {
+        $saleId = (int) ($_GET['id'] ?? 0);
+        $sale = $this->saleItemRepository->getBySaleId($saleId);
+
+        if ($sale === null) {
+            (new ErrorController())->notFound();
+            return;
+        }
+
+        $items = $this->saleItemRepository->getBySaleId($saleId);
+
+        $products = $this->productRepository->getAll();
+
+        $this->render('sales/edit', [
+            'sale' => $sale,
+            'items' => $items,
+            'products' => $products
+        ]);
+    }
+
+    public function cancel(): void
+    {
+        $saleId = (int) ($_GET['id']);
+        $sale = $this->saleRepository->getById($saleId);
+
+        if ($sale === null) {
+            (new ErrorController())->notFound();
+            return;
+        }
+
+        if ($sale->status !== 'pending') {
+            header('Location: index.php?route=sales/index');
+            return;
+        }
+
+        $items = $this->saleItemRepository->getBySaleId($saleId);
+
+        try {
+            $this->pdo->beginTransaction();
+
+            foreach ($items as $item) {
+                $this->productRepository->increaseStock(
+                    (int) $item['product_id'],
+                    (int) $item['quantity']
+                );
+            }
+
+            $this->saleRepository->updateStatus(
+                $saleId,
+                'cancelled'
+            );
+
+            $this->pdo->commit();
+
+            header('Location: index.php?route=sales/index');
+            return;
+        } catch (\Throwable $e) {
+
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+
+            // Por enquanto, volta para a lista
+            header('Location: index.php?route=sales/index');
+            return;
+        }
     }
 
     private function validateItems(

@@ -107,17 +107,19 @@ class ProductRepository
         $stmt->execute();
     }
 
-    public function decreaseStock(int $productId, int $quantity): void
+    public function decreaseStock(int $productId, int $quantity): bool
     {
         $stmt = $this->pdo->prepare(
             'UPDATE `products`
             SET `stock` = `stock` - :quantity
-            WHERE `id` = :id'
+            WHERE `id` = :id
+            AND `stock` >= :quantity'
         );
 
         $stmt->bindValue(':id', $productId, PDO::PARAM_INT);
         $stmt->bindValue(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 
     public function increaseStock(int $productId, int $quantity): void

@@ -72,7 +72,7 @@ $container->bind('csrfHelper', function () {
 });
 
 $csrfHelper = $container->get('csrfHelper');
-$csrfHelper->handle((string) ($_GET['route'] ?? 'products'));
+$csrfHelper->handle();
 
 function csrf_token()
 {
@@ -141,7 +141,13 @@ if ($route == 'pages') {
     $authService->ensureLoggedIn();
 
     $salesController = $container->get('saleController');
-    $salesController->update();
+    $salesController->edit();
+} else if ($route === 'sales/cancel') {
+    $authService = $container->get('authService');
+    $authService->ensureLoggedIn();
+
+    $salesController = $container->get('saleController');
+    $salesController->cancel();
 } else {
     // Nenhuma rota bateu então devolve o error 404
     $errorController = $container->get('errorController');

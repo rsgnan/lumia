@@ -8,6 +8,7 @@ use App\Model\SaleModel;
 class SaleRepository
 {
     public function __construct(private PDO $pdo) {}
+
     public function getAll(): array
     {
         $stmt = $this->pdo->prepare('SELECT * FROM `sales` ORDER BY `id` DESC');
@@ -15,6 +16,7 @@ class SaleRepository
         $entries = $stmt->fetchAll(PDO::FETCH_CLASS, SaleModel::class);
         return $entries;
     }
+
     public function getList(): array
     {
         $stmt = $this->pdo->prepare(
@@ -29,6 +31,38 @@ class SaleRepository
         $stmt->execute();
         $entries = $stmt->fetchAll(PDO::FETCH_CLASS, SaleModel::class);
         return $entries;
+    }
+
+    public function getById(int $id): ?SaleModel
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM `sales`
+            WHERE `id` = :id'
+        );
+
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, SaleModel::class);
+
+        $sale = $stmt->fetch();
+
+        return $sale !== false ? $sale : null;
+    }
+
+    public function updateStatus(int $saleId, string $status): void
+    {
+        $stmt = $this->pdo->prepare(
+            'UPDATE `sales`
+            SET `status` = :status
+            WHERE `id` = :id'
+        );
+
+        $stmt->bindValue(':id', $saleId, PDO::PARAM_INT);
+        $stmt->bindValue(':status', $status);
+
+        $stmt->execute();
+        
     }
     public function create(
         string $customer_name,
