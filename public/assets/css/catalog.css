@@ -1,4 +1,4 @@
-/* CATÁLOGO */
+/* BASE DO CATÁLOGO */
 body.shop-body {
     display: block;
     min-height: 100vh;
@@ -8,7 +8,7 @@ body.shop-body {
         var(--bg);
 }
 
-/* NAVBAR */
+/* BARRA DE NAVEGAÇÃO */
 .shop-navbar {
     position: sticky;
     top: 0;
@@ -72,7 +72,7 @@ body.shop-body {
     justify-content: center;
 }
 
-/* HERO */
+/* HERO DA LOJA */
 .shop-hero {
     position: relative;
     padding: 36px 40px 28px;
@@ -118,7 +118,7 @@ body.shop-body {
     margin: 0 auto;
 }
 
-/* FILTERS */
+/* FILTTROS */
 .shop-filters {
     position: sticky;
     top: 65px;
@@ -148,7 +148,7 @@ body.shop-body {
     color: var(--text);
 }
 
-/* GRID */
+/* GRADE DA LOJA */
 .shop-content {
     padding: 36px 40px 64px;
     max-width: 1400px;
@@ -319,7 +319,6 @@ body.shop-body {
     margin-right: 2px;
 }
 
-/* EMPTY STATE */
 .shop-empty {
     text-align: center;
     padding: 80px 20px;
@@ -337,7 +336,7 @@ body.shop-body {
     font-size: 14px;
 }
 
-/* FOOTER */
+/* RODAPÉ */
 .shop-footer {
     padding: 28px 40px;
     text-align: center;
@@ -346,7 +345,7 @@ body.shop-body {
     border-top: 1px solid var(--border);
 }
 
-/* RESPONSIVE */
+/* RESPONSIVO */
 @media (max-width: 1180px) {
     .shop-grid {
         grid-template-columns: repeat(3, 1fr);

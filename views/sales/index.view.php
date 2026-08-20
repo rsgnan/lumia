@@ -40,8 +40,10 @@
                         <td><?php echo e($sale->items_quantity); ?> <?php echo $sale->items_quantity == 1 ? 'item' : 'itens'; ?></td>
                         <td><strong>R$ <?php echo e(number_format((float) $sale->total_amount, 2, ',', '.')); ?></strong></td>
                         <td>
-                            <?php if ($sale->status === 'completed'): ?>
-                                <span class="badge green">Concluída</span>
+                            <?php if ($sale->status === 'pending'): ?>
+                            <span class="badge yellow">Pendente</span>
+                            <?php elseif ($sale->status === 'completed'): ?>
+                            <span class="badge green">Concluída</span>
                             <?php else: ?>
                             <span class="badge red">Cancelada</span>
                             <?php endif; ?>

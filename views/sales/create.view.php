@@ -82,6 +82,7 @@
                     Status
                 </label>
                 <select class="form-select" id="statusSelect" name="status">
+                    <option value="pending" selected>Pendente</option>
                     <option value="complete">Concluída</option>
                     <option value="cancelled">Cancelada</option>
                 </select>
@@ -112,6 +113,7 @@
             <button type="submit" class="btn-finalize">
                 Finalizar venda
             </button>
+            <input type="hidden" name="items" id="saleItems">
         </div>
     </div>
     </div>

@@ -46,14 +46,23 @@ $container->bind('saleRepository', function () use ($container) {
     return new \App\Repository\SaleRepository($pdo);
 });
 
+$container->bind('saleItemRepository', function () use ($container) {
+    $pdo = $container->get('pdo');
+    return new \App\Repository\SaleItemRepository($pdo);
+});
+
 $container->bind('saleController', function () use ($container) {
     $authService = $container->get('authService');
-    $saleRepository = $container->get('saleRepository');
+    $pdo = $container->get('pdo');
     $productRepository = $container->get('productRepository');
+    $saleRepository = $container->get('saleRepository');
+    $saleItemRepository = $container->get('saleItemRepository');
     return new \App\Controller\SaleController(
         $authService,
+        $pdo,
         $productRepository,
-        $saleRepository
+        $saleRepository,
+        $saleItemRepository
     );
 });
 

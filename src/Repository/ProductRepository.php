@@ -106,4 +106,30 @@ class ProductRepository
         $stmt->bindValue(':photo', $photo);
         $stmt->execute();
     }
+
+    public function decreaseStock(int $productId, int $quantity): void
+    {
+        $stmt = $this->pdo->prepare(
+            'UPDATE `products`
+            SET `stock` = `stock` - :quantity
+            WHERE `id` = :id'
+        );
+
+        $stmt->bindValue(':id', $productId, PDO::PARAM_INT);
+        $stmt->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function increaseStock(int $productId, int $quantity): void
+    {
+        $stmt = $this->pdo->prepare(
+            'UPDATE `products`
+            SET `stock` = `stock` + :quantity
+            WHERE `id` = :id'
+        );
+
+        $stmt->bindValue(':id', $productId, PDO::PARAM_INT);
+        $stmt->bindValue(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

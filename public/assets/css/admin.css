@@ -1,3 +1,4 @@
+/* BASE DO ADMIN */
 *,
 *::before,
 *::after {
@@ -31,7 +32,7 @@ body {
     overflow-x: hidden;
 }
 
-/* SIDEBAR */
+/* MENU LATERAL */
 .sidebar {
     width: var(--sidebar-w);
     background: var(--surface);
@@ -179,7 +180,7 @@ body {
     color: var(--muted);
 }
 
-/* MAIN */
+/* PRINCIPAL */
 .main {
     margin-left: var(--sidebar-w);
     flex: 1;
@@ -188,7 +189,7 @@ body {
     min-height: 100vh;
 }
 
-/* TOPBAR */
+/* BARRA SUPERIOR */
 .topbar {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -271,13 +272,13 @@ body {
     border: 1.5px solid var(--surface);
 }
 
-/* CONTENT */
+/* CONTEÚDO */
 .content {
     padding: 28px;
     flex: 1;
 }
 
-/* PAGES */
+/* PÁGINAS */
 .page {
     display: none;
     animation: fadeIn 0.3s ease;
@@ -287,19 +288,6 @@ body {
     display: block;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* PAGE HEADER */
 .page-header {
     display: flex;
     align-items: center;
@@ -387,7 +375,7 @@ body {
     height: 18px;
 }
 
-/* STAT CARDS */
+/* CARTÃO DE ESTATÍSTICAS */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -499,7 +487,7 @@ body {
     color: var(--red);
 }
 
-/* FORM */
+/* FORMULÁRIO */
 .form-panel {
     max-width: 760px;
     margin:0 ;
@@ -552,7 +540,7 @@ body {
     margin-bottom: 0;
 }
 
-/* IMAGE PREVIEW */
+/* PRÉVIA DA IMAGEM */
 .image-preview {
     width: 100%;
     height: 100%;
@@ -562,7 +550,8 @@ body {
     object-fit: cover;
     object-position: center;
 }
-/* IMAGE UPLOAD */
+
+/* UPLOAD DE IMAGEM */
 .image-upload {
     border: 1.5px dashed var(--border);
     border-radius: 10px;
@@ -606,7 +595,7 @@ body {
     color: var(--muted);
 }
 
-/* TABLES */
+/* CARDS */
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -638,6 +627,7 @@ body {
     padding: 20px;
 }
 
+/* TABELAS */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -670,6 +660,7 @@ tbody tr:hover td {
     background: rgba(255, 255, 255, 0.02);
 }
 
+/* BADGES */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -704,12 +695,17 @@ tbody tr:hover td {
     color: var(--accent2);
 }
 
+.badge.yellow {
+    background: rgba(234, 179, 8, 0.12);
+    color: var(--yellow);
+}
+
 .actions {
     display: flex;
     gap: 6px;
 }
 
-/* FORM */
+/* FORMULÁRIO */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -771,7 +767,7 @@ tbody tr:hover td {
     margin-top: 20px;
 }
 
-/* CHART AREA */
+/* ÁREA DE GRÁFICO */
 .chart-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -857,7 +853,7 @@ svg.donut {
     flex-shrink: 0;
 }
 
-/* PRODUCT GRID */
+/* GRADE DE PRODUTOS */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -914,7 +910,7 @@ svg.donut {
     color: var(--accent);
 }
 
-/* TABS */
+/* ABAS */
 .tabs {
     display: flex;
     gap: 4px;
@@ -942,7 +938,7 @@ svg.donut {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* ERROR PAGE */
+/* PÁGINA DE ERRO */
 .error-page {
     display: 100%;
     min-height: 100vh;
@@ -1020,7 +1016,18 @@ svg.donut {
     gap: 10px;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVO */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 @media (max-width: 900px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);

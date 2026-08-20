@@ -49,7 +49,7 @@ searchInput.addEventListener('input', function () {
     });
 
     autocompleteResults.style.display = 'block';
-});
+}); 
 
 // ADICIONAR PRODUTO
 function addProduct(product) {
@@ -73,6 +73,7 @@ function addProduct(product) {
 
     renderItems();
     updateSummary();
+    updateSaleItemsInput();
 
     searchInput.value = '';
     autocompleteResults.innerHTML = '';
@@ -137,6 +138,7 @@ function renderItems() {
 
             renderItems();
             updateSummary();
+            updateSaleItemsInput();
         });
 
         // REMOVER PRODUTO
@@ -154,6 +156,7 @@ function renderItems() {
 
             renderItems();
             updateSummary();
+            updateSaleItemsInput();
         });
 
     });
@@ -189,9 +192,29 @@ function formatMoney(value) {
     return 'R$ ' + value.toFixed(2).replace('.', ',');
 }
 
+// ATUALIZAR PRODUTOS DA VENDA NO FORMULÁRIO
+function updateSaleItemsInput() {
+    const saleItemsInput = document.getElementById('saleItems');
+    saleItemsInput.value = JSON.stringify(
+        saleItems.map(function (item) {
+            return {
+                id: item.id,
+                quantity: item.quantity
+            };
+        })
+    );
+}
+
 // DESCONTO
 const discountAmount = document.getElementById('discountAmount');
 
 discountAmount.addEventListener('input', function () {
     updateSummary();
+});
+
+// ATUALIZAR PRODUTOS ANTES DE ENVIAR A VENDA
+const saleForm = document.querySelector('form');
+
+saleForm.addEventListener('submit', function() {
+    updateSaleItemsInput();
 });
