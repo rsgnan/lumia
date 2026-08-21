@@ -1,8 +1,26 @@
-// BUSCA POR PRODUTO
-const saleItems = [];
+//PRODUTOS DA VENDA
+const saleItems = typeof existingSaleItems !== 'undefined'
+    ? existingSaleItems.map(function (item) {
+
+        const product = products.find(function (product) {
+            return Number(product.id) === Number(item.product_id);
+        });
+
+
+        return {
+            id: Number(item.product_id),
+            name: item.product_name,
+            price: Number(item.unit_price),
+            stock: Number(product ? product.stock : 0),
+            quantity: Number(item.quantity)
+        };
+    })
+    : [];
+
 const searchInput = document.getElementById('searchInput');
 const autocompleteResults = document.getElementById('autocompleteResults');
 
+// BUSCA POR PRODUTO
 searchInput.addEventListener('input', function () {
     const search = this.value.trim().toLowerCase();
 
@@ -49,7 +67,7 @@ searchInput.addEventListener('input', function () {
     });
 
     autocompleteResults.style.display = 'block';
-}); 
+});
 
 // ADICIONAR PRODUTO
 function addProduct(product) {
@@ -187,12 +205,12 @@ function updateSummary() {
     sumTotal.textContent = formatMoney(total);
 }
 
-// FORMATAR DINHEIRO
+// FORMATAR MOEDA
 function formatMoney(value) {
     return 'R$ ' + value.toFixed(2).replace('.', ',');
 }
 
-// ATUALIZAR PRODUTOS DA VENDA NO FORMULÁRIO
+// ATUALIZAR PRODUTOS
 function updateSaleItemsInput() {
     const saleItemsInput = document.getElementById('saleItems');
     saleItemsInput.value = JSON.stringify(
@@ -215,6 +233,11 @@ discountAmount.addEventListener('input', function () {
 // ATUALIZAR PRODUTOS ANTES DE ENVIAR A VENDA
 const saleForm = document.querySelector('form');
 
-saleForm.addEventListener('submit', function() {
+saleForm.addEventListener('submit', function () {
     updateSaleItemsInput();
 });
+
+// CARREGA ITEMS EXISTENTES AO EDITAR
+renderItems();
+updateSummary();
+updateSaleItemsInput();

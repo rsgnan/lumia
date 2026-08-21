@@ -9,8 +9,8 @@
                 </svg>
             </a>
             <div>
-                <h1>Nova Venda</h1>
-                <p>Busque e adicione produtos - o resumo é montado ao lado</p>
+                <h1>Editar Venda</h1>
+                <p>Altere os produtos e informações da venda</p>
             </div>
         </div>
     </div>
@@ -45,11 +45,11 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">
-                                Itens adicionados
+                                Itens da venda
                             </div>
 
                             <div class="card-subtitle">
-                                Os produtos adicionados à venda aparecerão aqui.
+                               Alterar os produtos e quantidades desta venda.
                             </div>
                         </div>
                     </div>
@@ -64,11 +64,6 @@
                             </tr>
                         </thead>
                         <tbody id="itemsBody">
-                            <tr>
-                                <td colspan="5" style="text-align: center; color: var(--muted);">
-                                    Nenhum produto adicionado.
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -81,14 +76,14 @@
                 <label class="form-label" for="customerName">
                     Nome do Cliente
                 </label>
-                <input class="form-input" type="text" id="customerName" name="customer_name" placeholder="Ex: Maria da Silva">
+                <input class="form-input" type="text" id="customerName" name="customer_name" value="<?php echo e($sale->customer_name); ?>" placeholder="Ex: Maria da Silva">
             </div>
 
             <div class="field">
                 <label class="form-label" for="discountAmount">
                     Desconto (R$)
                 </label>
-                <input class="form-input" type="number" id="discountAmount" name="discount_amount" min="0" step="0.01" value="0">
+                <input class="form-input" type="number" id="discountAmount" name="discount_amount" min="0" step="0.01" value="<?php echo e($sale->discount_amount); ?>">
             </div>
 
             <div class="field">
@@ -96,8 +91,9 @@
                     Status
                 </label>
                 <select class="form-select" id="statusSelect" name="status">
-                    <option value="pending" selected>Pendente</option>
-                    <option value="completed">Concluída</option>
+                    <option value="pending" <?php echo $sale->status === 'pending' ? 'selected' : ''; ?>>Pendente</option>
+                    <option value="completed" <?php echo $sale->status === 'completed' ? 'selected' : ''; ?>>Concluída</option>
+                    <option value="cancelled" <?php echo $sale->status === 'cancelled' ? 'selected' : ''; ?>>Cancelada</option>
                 </select>
             </div>
 
@@ -133,5 +129,6 @@
 </form>
 <script>
 const products = <?php echo json_encode($products); ?>;
+const existingSaleItems = <?php echo json_encode($items); ?>;
 </script>
-<script src="assets/js/sales/create.js"></script>
+<script src="assets/js/sales/sales.js"></script>

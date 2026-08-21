@@ -47,4 +47,15 @@ class SaleItemRepository
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deleteBySaleId(int $saleId): void
+    {
+        $stmt = $this->pdo->prepare(
+            'DELETE FROM `sale_items`
+            WHERE `sale_id` = :sale_id'
+        );
+
+        $stmt->bindValue(':sale_id', $saleId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

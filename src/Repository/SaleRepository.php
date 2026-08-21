@@ -50,6 +50,32 @@ class SaleRepository
         return $sale !== false ? $sale : null;
     }
 
+    public function update(
+        int $saleId,
+        string $customer_name,
+        float $discount_amount,
+        float $total_amount,
+        string $status
+    ): void {
+        $stmt = $this->pdo->prepare(
+            'UPDATE `sales`
+            SET
+                `customer_name` = :customer_name,
+                `discount_amount` = :discount_amount,
+                `total_amount` = :total_amount,
+                `status` = :status
+            WHERE `id` = :id'
+        );
+
+        $stmt->bindValue(':id', $saleId, PDO::PARAM_INT);
+        $stmt->bindValue(':customer_name', $customer_name);
+        $stmt->bindValue(':discount_amount', $discount_amount);
+        $stmt->bindValue(':total_amount', $total_amount);
+        $stmt->bindValue(':status', $status);
+        
+        $stmt->execute();
+
+    }
     public function updateStatus(int $saleId, string $status): void
     {
         $stmt = $this->pdo->prepare(
@@ -62,8 +88,8 @@ class SaleRepository
         $stmt->bindValue(':status', $status);
 
         $stmt->execute();
-        
     }
+
     public function create(
         string $customer_name,
         float $discount_amount,

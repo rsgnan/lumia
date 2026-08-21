@@ -133,5 +133,6 @@
 </form>
 <script>
 const products = <?php echo json_encode($products); ?>;
+const existingSaleItems = [];
 </script>
-<script src="assets/js/sales/create.js"></script>
+<script src="assets/js/sales/sales.js"></script>
